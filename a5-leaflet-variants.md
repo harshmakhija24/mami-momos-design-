@@ -12,3 +12,7 @@ All variants are **148 × 210 mm portrait**, double-sided, and designed as a mat
 ## Consistency rules
 
 Every front uses a strong 3–7 word headline, one short supporting line, a visible Mami Momos mark, and a small editable location/QR strip. Every back keeps food decisions concise and uses menu names confirmed in the supplied menu: Veg Steam Momo, Paneer Steam Momo, Veg Schezwan Momo, Kadak Masala Chai, Classic French Fries, and Cold Coffee. The layouts rely on typography, print texture, geometric motifs, and genuine menu copy instead of generated food photos.
+
+## Jaipur × Kyoto back revision
+
+The revised back will continue the front’s **night-ink, warm-paper, and coral** language rather than switching to a light menu sheet. The principal headline is **“THE BEST MOMOS NEED NO FILTER.”** Three bordered **photo placeholders**—Steam, Spice, and Sip—will remain intentionally empty until real food photography is available. Beneath them, a concise authentic-menu rail and two named combo placeholders will make the handout feel useful at point of distribution without relying on invented imagery or final prices.

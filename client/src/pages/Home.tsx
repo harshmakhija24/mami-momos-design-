@@ -52,7 +52,7 @@ const assets = {
 };
 
 const downloads = {
-  jaipurKyoto: download("variant-1-jaipur-kyoto.pdf", "/manus-storage/variant-1-jaipur-kyoto_0bf2c19a.pdf"),
+  jaipurKyoto: download("variant-1-jaipur-kyoto.pdf", "/manus-storage/variant-1-jaipur-kyoto_64579826.pdf"),
   hawaMahal: download("variant-2-hawa-mahal-walk.pdf", "/manus-storage/variant-2-hawa-mahal-walk_6866245b.pdf"),
   tankTalk: download("variant-3-tank-talk.pdf", "/manus-storage/variant-3-tank-talk_ecac3850.pdf"),
   pinkCity: download("variant-4-pink-city-express.pdf", "/manus-storage/variant-4-pink-city-express_6ffcb5ec.pdf"),
@@ -216,18 +216,15 @@ function ImportedLeaflet({ side }: { side: Side }) {
   }
 
   return (
-    <div className="imported-leaflet imported-back">
-      <i className="imported-arch-one" aria-hidden="true" /><i className="imported-arch-two" aria-hidden="true" />
-      <div className="imported-sheet imported-back-sheet">
-        <div className="imported-topline"><div className="imported-brand"><b>◒</b><span><strong>MAMI</strong><small>MOMOS</small></span></div><em className="imported-stamp">◌ MOMO CLUB</em></div>
-        <div className="imported-back-heading"><p>JAIPUR HEAT · KYOTO HUSH</p><h2>Pick your<br /><i>fold.</i></h2></div>
-        <section className="imported-combos">
-          <div className="imported-section-line"><span>COMBOS / BUILT TO SHARE</span><small>CHOOSE YOUR MOOD</small></div>
-          <article className="imported-solo"><div className="imported-six">6<i /><i /><i /></div><div><small>01 / THE SOLO FOLD</small><h3>One basket.<br /><i>Zero compromise.</i></h3><p>6 momos · 2 signature dips · iced chai</p><b>SET PRICE <strong>₹ ___</strong></b></div></article>
-          <div className="imported-pair-row"><article><small>02 / THE PAIR UP</small><h3>12<br /><i>momos</i></h3><p>2 drinks · 2 dips</p><b>₹ ___</b></article><article><small>03 / BIG TABLE</small><h3>20<br /><i>momos</i></h3><p>4 drinks · 3 dips</p><b>₹ ___</b></article></div>
-        </section>
-        <section className="imported-fillings"><div className="imported-section-line"><span>PICK A FILLING</span><small>VEG / PANEER / MUSHROOM</small></div><div><span>ROSE CHILLI VEG</span><span>BLACK SESAME PANEER</span><span>MISO MUSHROOM</span></div></section>
-        <footer className="imported-back-footer"><span>▦ PRICES LEFT OPEN FOR FINAL MENU INSERT.</span><span>⌁ ASK ABOUT VEGAN &amp; ALLERGEN OPTIONS.</span><em>02 / BACK</em></footer>
+    <div className="imported-leaflet imported-back imported-revamp-back">
+      <div className="imported-revamp-glow" aria-hidden="true" />
+      <div className="imported-revamp-sheet">
+        <div className="imported-topline"><div className="imported-brand"><b>◒</b><span><strong>MAMI</strong><small>MOMOS</small></span></div><em className="imported-stamp">JAIPUR × KYOTO / 02</em></div>
+        <div className="imported-revamp-head"><p>FROM HAWA MAHAL, WITH HEAT.</p><h2>THE BEST<br />MOMOS NEED<br /><i>NO FILTER.</i></h2></div>
+        <div className="imported-photo-slots" aria-label="Food-photo placeholders"><article><span>PHOTO PLACEHOLDER</span><strong>STEAM</strong><small>Veg Steam · 6 pcs</small></article><article><span>PHOTO PLACEHOLDER</span><strong>SPICE</strong><small>Veg Schezwan · 6 pcs</small></article><article><span>PHOTO PLACEHOLDER</span><strong>SIP</strong><small>Kadak Masala Chai</small></article></div>
+        <div className="imported-menu-rail"><span>MENU CUES</span><p>Veg Steam Momo · Paneer Steam Momo · Veg Schezwan Momo · Classic French Fries · Cold Coffee</p></div>
+        <div className="imported-combo-placeholders"><article><span>COMBO PLACEHOLDER / 01</span><strong>THE HAWA WALK</strong><small>6 momos + chai + a final price</small></article><article><span>COMBO PLACEHOLDER / 02</span><strong>THE PINK CITY TABLE</strong><small>12 momos + sides + a final price</small></article></div>
+        <footer className="imported-revamp-footer"><span>REAL FOOD PHOTOS, FINAL PRICES, QR &amp; ADDRESS TO BE INSERTED.</span><em>FRONT / BACK — ONE STORY</em></footer>
       </div>
     </div>
   );
@@ -279,12 +276,18 @@ function preferredVariant(project: DesignProject) {
   return project.variants.some((item) => item.id === requested) ? requested! : project.variants[0].id;
 }
 
+function preferredSide() {
+  if (typeof window === "undefined") return "front" as Side;
+  const hashQuery = window.location.hash.includes("?") ? window.location.hash.slice(window.location.hash.indexOf("?") + 1) : "";
+  return new URLSearchParams(hashQuery || window.location.search).get("side") === "back" ? "back" : "front";
+}
+
 export function ProjectDetail({ projectId }: { projectId: string }) {
   const project = projects.find((item) => item.id === projectId) ?? projects[0];
-  const [side, setSide] = useState<Side>("front");
+  const [side, setSide] = useState<Side>(() => preferredSide());
   const [variantId, setVariantId] = useState(() => preferredVariant(project));
 
-  useEffect(() => { setSide("front"); setVariantId(preferredVariant(project)); }, [project.id]);
+  useEffect(() => { setSide(preferredSide()); setVariantId(preferredVariant(project)); }, [project.id]);
 
   const variant = useMemo(
     () => project.variants.find((item) => item.id === variantId) ?? project.variants[0],
