@@ -18,7 +18,7 @@ type Variant = {
   back: string;
   tone: Tone;
   marker: string;
-  artwork?: "hawa-pamphlet";
+  artwork?: "hawa-pamphlet" | "imported-leaflet";
   format?: string;
 };
 
@@ -44,8 +44,19 @@ const projects: DesignProject[] = [
     tilePosition: "50% 15%",
     variants: [
       {
+        id: "jaipur-kyoto-leaflet",
+        label: "Variant 1 — Jaipur × Kyoto Leaflet",
+        note: "Imported two-sided A5 leaflet from the original design source",
+        front: "",
+        back: "",
+        tone: "teal",
+        marker: "#17262c",
+        artwork: "imported-leaflet",
+        format: "A5 portrait",
+      },
+      {
         id: "hawa-mahal-a5",
-        label: "Variant 1 — Hawa Mahal A5",
+        label: "Variant 2 — Hawa Mahal A5",
         note: "Visitor pamphlet / matching front and back",
         front: "",
         back: "",
@@ -56,7 +67,7 @@ const projects: DesignProject[] = [
       },
       {
         id: "cover-steam",
-        label: "Variant 2 — Menu cover",
+        label: "Variant 3 — Menu cover",
         note: "Cover page / first momo catalogue",
         front: "/manus-storage/mami-menu-page-1_e82f82a2.png",
         back: "/manus-storage/mami-menu-page-2_b673ed98.png",
@@ -66,7 +77,7 @@ const projects: DesignProject[] = [
       },
       {
         id: "small-plates",
-        label: "Variant 3 — Menu interiors",
+        label: "Variant 4 — Menu interiors",
         note: "Momos, noodles, and starters edit",
         front: "/manus-storage/mami-menu-page-3_fa75ef5c.png",
         back: "/manus-storage/mami-menu-page-4_3231e81e.png",
@@ -156,6 +167,39 @@ function HawaMahalPamphlet({ side }: { side: Side }) {
   );
 }
 
+function ImportedLeaflet({ side }: { side: Side }) {
+  if (side === "front") {
+    return (
+      <div className="imported-leaflet imported-front">
+        <div className="imported-front-art" aria-hidden="true"><i className="imported-jharokha" /><i className="imported-shoji" /></div>
+        <div className="imported-sheet">
+          <div className="imported-topline"><div className="imported-brand"><b>◒</b><span><strong>MAMI</strong><small>MOMOS</small></span></div><em>JAIPUR × KYOTO</em></div>
+          <div className="imported-front-copy"><p>✦&nbsp; A SMALLER, WARMER WORLD</p><h2>Fold the<br /><i>ordinary.</i></h2><span>Hand-rolled momos with Jaipur fire and a quiet Kyoto finish.</span></div>
+          <div className="imported-flavour"><span>STEAMED</span><i /><span>SPICED</span><i /><span>SHARED</span></div>
+          <div className="imported-front-bottom"><span>JHAROKHA TO SHOJI<br />ONE BITE AT A TIME.</span><b>↹<small>TURN FOR<br />COMBOS</small></b><em>01 / FRONT</em></div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="imported-leaflet imported-back">
+      <i className="imported-arch-one" aria-hidden="true" /><i className="imported-arch-two" aria-hidden="true" />
+      <div className="imported-sheet imported-back-sheet">
+        <div className="imported-topline"><div className="imported-brand"><b>◒</b><span><strong>MAMI</strong><small>MOMOS</small></span></div><em className="imported-stamp">◌ MOMO CLUB</em></div>
+        <div className="imported-back-heading"><p>JAIPUR HEAT · KYOTO HUSH</p><h2>Pick your<br /><i>fold.</i></h2></div>
+        <section className="imported-combos">
+          <div className="imported-section-line"><span>COMBOS / BUILT TO SHARE</span><small>CHOOSE YOUR MOOD</small></div>
+          <article className="imported-solo"><div className="imported-six">6<i /><i /><i /></div><div><small>01 / THE SOLO FOLD</small><h3>One basket.<br /><i>Zero compromise.</i></h3><p>6 momos · 2 signature dips · iced chai</p><b>SET PRICE <strong>₹ ___</strong></b></div></article>
+          <div className="imported-pair-row"><article><small>02 / THE PAIR UP</small><h3>12<br /><i>momos</i></h3><p>2 drinks · 2 dips</p><b>₹ ___</b></article><article><small>03 / BIG TABLE</small><h3>20<br /><i>momos</i></h3><p>4 drinks · 3 dips</p><b>₹ ___</b></article></div>
+        </section>
+        <section className="imported-fillings"><div className="imported-section-line"><span>PICK A FILLING</span><small>VEG / PANEER / MUSHROOM</small></div><div><span>ROSE CHILLI VEG</span><span>BLACK SESAME PANEER</span><span>MISO MUSHROOM</span></div></section>
+        <footer className="imported-back-footer"><span>▦ PRICES LEFT OPEN FOR FINAL MENU INSERT.</span><span>⌁ ASK ABOUT VEGAN &amp; ALLERGEN OPTIONS.</span><em>02 / BACK</em></footer>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <main className="library-page">
@@ -199,7 +243,7 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
       <section className="detail-layout">
         <section className="proof-area" aria-label="Design preview">
           <div className={`proof-paper tone-${variant.tone}`}>
-            {variant.artwork === "hawa-pamphlet" ? <HawaMahalPamphlet side={side} /> : <img src={preview} alt={`${project.title} ${variant.label} ${side}`} />}
+            {variant.artwork === "hawa-pamphlet" ? <HawaMahalPamphlet side={side} /> : variant.artwork === "imported-leaflet" ? <ImportedLeaflet side={side} /> : <img src={preview} alt={`${project.title} ${variant.label} ${side}`} />}
             <div className="proof-label">{side.toUpperCase()} / PROOF</div>
           </div>
           <p className="proof-note">{variant.note}</p>
