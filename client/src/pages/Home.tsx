@@ -274,7 +274,8 @@ export default function Home() {
 
 function preferredVariant(project: DesignProject) {
   if (typeof window === "undefined") return project.variants[0].id;
-  const requested = new URLSearchParams(window.location.search).get("variant");
+  const hashQuery = window.location.hash.includes("?") ? window.location.hash.slice(window.location.hash.indexOf("?") + 1) : "";
+  const requested = new URLSearchParams(hashQuery || window.location.search).get("variant");
   return project.variants.some((item) => item.id === requested) ? requested! : project.variants[0].id;
 }
 
