@@ -15,7 +15,7 @@ import {
 import { useMemo, useState } from "react";
 
 type Side = "front" | "back";
-type Tone = "teal" | "paprika" | "amber" | "monsoon";
+type Tone = "teal" | "paprika" | "amber" | "monsoon" | "hawa";
 
 type Variant = {
   id: string;
@@ -25,6 +25,9 @@ type Variant = {
   back: string;
   tone: Tone;
   marker: string;
+  artwork?: "hawa-pamphlet";
+  format?: string;
+  archive?: string;
 };
 
 type DesignProject = {
@@ -55,6 +58,18 @@ const projects: DesignProject[] = [
     tileImage: "/manus-storage/mami-menu-page-1_e82f82a2.png",
     tilePosition: "50% 16%",
     variants: [
+      {
+        id: "hawa-mahal-a5",
+        label: "Hawa Mahal A5 / Visitor Handout",
+        note: "Matching front + back street-distribution proof",
+        front: "",
+        back: "",
+        tone: "hawa",
+        marker: "#e84d2a",
+        artwork: "hawa-pamphlet",
+        format: "A5 portrait",
+        archive: "02 matching sides",
+      },
       {
         id: "cover-steam",
         label: "Cover / Steam Momo",
@@ -118,6 +133,88 @@ const projects: DesignProject[] = [
     ],
   },
 ];
+
+function HawaMahalPamphlet({ side }: { side: Side }) {
+  const isFront = side === "front";
+
+  return (
+    <div className={`pamphlet-art pamphlet-${side}`}>
+      <div className="pamphlet-trim" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="pamphlet-kicker">MAMI MOMOS / HAWA MAHAL EDITION / A5 PROOF</div>
+
+      {isFront ? (
+        <>
+          <div className="pamphlet-front-copy">
+            <span className="pamphlet-micro">FOR THE JAIPUR WALK</span>
+            <h2>
+              PINK CITY,
+              <br />
+              <i>HOT MOMO.</i>
+            </h2>
+            <p>A warm stop for the Hawa Mahal wander.</p>
+          </div>
+
+          <div className="hawa-scene" aria-hidden="true">
+            <div className="tokyo-roof roof-one"><i /><i /><i /></div>
+            <div className="tokyo-roof roof-two"><i /><i /></div>
+            <div className="hawa-facade">
+              {Array.from({ length: 15 }, (_, index) => <span key={index} />)}
+            </div>
+            <div className="hawa-base"><i /><i /><i /><i /><i /></div>
+          </div>
+
+          <div className="front-offer-card">
+            <span>HAWA MAHAL WALKER OFFER</span>
+            <strong>6 PC MOMO + MASALA CHAI</strong>
+            <em>₹ — FINAL PRICE TO BE ADDED</em>
+          </div>
+
+          <div className="pamphlet-footer-line">
+            <span>ADDRESS / QR / CONTACT — EDIT BEFORE PRINTING</span>
+            <img src="/manus-storage/mami-momos-archive-mark_720c60a2.png" alt="" />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="pamphlet-back-head">
+            <span className="pamphlet-micro">THE NEARBY STOP</span>
+            <h2>THREE WAYS TO <i>PAUSE.</i></h2>
+            <p>Featured combinations for the Hawa Mahal stroll.</p>
+          </div>
+
+          <div className="combo-stack">
+            <article className="combo-card combo-one">
+              <span>01 / CITY LOOP</span>
+              <strong>Veg Steam Momo · 6 pcs<br />Kadak Masala Chai</strong>
+              <em>₹ —</em>
+            </article>
+            <article className="combo-card combo-two">
+              <span>02 / JHAROKHA</span>
+              <strong>Paneer Steam Momo · 6 pcs<br />Classic French Fries · Cold Coffee</strong>
+              <em>₹ —</em>
+            </article>
+            <article className="combo-card combo-three">
+              <span>03 / EVENING EDIT</span>
+              <strong>Veg Schezwan Momo · 6 pcs<br />Chilli Garlic Noodles Veg</strong>
+              <em>₹ —</em>
+            </article>
+          </div>
+
+          <div className="back-note">ALL PRICES, QR, ADDRESS &amp; OFFER TERMS ARE EDITABLE PLACEHOLDERS.</div>
+          <div className="pamphlet-footer-line">
+            <span>FRONT / BACK DESIGNED AS ONE SET</span>
+            <img src="/manus-storage/mami-momos-archive-mark_720c60a2.png" alt="" />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
   const [selectedProjectId, setSelectedProjectId] = useState(projects[0].id);
@@ -247,13 +344,17 @@ export default function Home() {
               <span className="crop-corner crop-tr" />
               <span className="crop-corner crop-bl" />
               <span className="crop-corner crop-br" />
-              <div className="artboard-paper">
-                <img
-                  key={`${selectedProject.id}-${selectedVariant.id}-${side}`}
-                  className="design-preview"
-                  src={previewImage}
-                  alt={`${selectedProject.title}, ${selectedVariant.label}, ${side} side`}
-                />
+              <div className={`artboard-paper ${selectedVariant.artwork ? "is-artwork" : ""}`}>
+                {selectedVariant.artwork === "hawa-pamphlet" ? (
+                  <HawaMahalPamphlet side={side} />
+                ) : (
+                  <img
+                    key={`${selectedProject.id}-${selectedVariant.id}-${side}`}
+                    className="design-preview"
+                    src={previewImage}
+                    alt={`${selectedProject.title}, ${selectedVariant.label}, ${side} side`}
+                  />
+                )}
                 <div className="proof-stamp" aria-hidden="true">
                   <span>{side.toUpperCase()}</span>
                   <i />
@@ -335,11 +436,11 @@ export default function Home() {
             <dl className="spec-list">
               <div>
                 <dt>FORMAT</dt>
-                <dd>{selectedProject.dimensions}</dd>
+                <dd>{selectedVariant.format ?? selectedProject.dimensions}</dd>
               </div>
               <div>
                 <dt>ARCHIVE</dt>
-                <dd>{selectedProject.sheets}</dd>
+                <dd>{selectedVariant.archive ?? selectedProject.sheets}</dd>
               </div>
               <div>
                 <dt>ACTIVE SHEET</dt>

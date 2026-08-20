@@ -199,6 +199,69 @@ button:focus-visible, a:focus-visible, [role="combobox"]:focus-visible {
 .preview-amber .design-preview { filter: saturate(1.15) sepia(0.08) contrast(1.03); }
 .preview-monsoon .design-preview { filter: saturate(0.82) hue-rotate(8deg) contrast(1.05) brightness(0.91); }
 
+/* The Hawa Mahal A5 proof is deliberately a text-and-geometry concept: imagery is a placeholder until approved photography arrives. */
+.artboard-paper.is-artwork { background: #f5e2bd; }
+.pamphlet-art {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #193754;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 240, 193, 0.82) 0 4%, transparent 4.5%),
+    linear-gradient(145deg, rgba(255,255,255,0.26), transparent 42%),
+    #f3c987;
+  font-family: "Space Grotesk", Arial, sans-serif;
+  animation: proof-in 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.pamphlet-art::before { position: absolute; inset: 0; content: ""; opacity: 0.46; pointer-events: none; background-image: radial-gradient(rgba(23,50,71,0.23) 0.55px, transparent 0.7px); background-size: 3px 3px; mix-blend-mode: multiply; }
+.pamphlet-art::after { position: absolute; left: -19%; right: -19%; bottom: 15%; height: 20px; content: ""; border-top: 2px solid #e84d2a; border-bottom: 1px solid rgba(23,50,71,0.33); transform: rotate(-3deg); }
+.pamphlet-trim { position: absolute; inset: 11px; z-index: 3; pointer-events: none; border: 1px solid rgba(25,55,84,0.75); }
+.pamphlet-trim span { position: absolute; width: 9px; height: 9px; background: #e84d2a; }
+.pamphlet-trim span:nth-child(1) { left: -4px; top: -4px; }
+.pamphlet-trim span:nth-child(2) { right: -4px; top: -4px; }
+.pamphlet-trim span:nth-child(3) { left: -4px; bottom: -4px; }
+.pamphlet-trim span:nth-child(4) { right: -4px; bottom: -4px; }
+.pamphlet-kicker { position: absolute; top: 20px; left: 26px; right: 26px; z-index: 4; display: flex; justify-content: space-between; color: #193754; font-size: 0.45rem; font-weight: 700; letter-spacing: 0.11em; }
+.pamphlet-kicker::after { content: "✦"; color: #e84d2a; font-size: 0.8rem; line-height: 0.3; }
+.pamphlet-front-copy, .pamphlet-back-head { position: absolute; z-index: 4; left: 28px; right: 25px; }
+.pamphlet-front-copy { top: 59px; }
+.pamphlet-micro { display: inline-block; padding: 0.25rem 0.35rem; color: #f8f0df; background: #193754; font-size: 0.44rem; font-weight: 700; letter-spacing: 0.13em; }
+.pamphlet-front-copy h2, .pamphlet-back-head h2 { margin: 0.42rem 0 0; font-family: "DM Serif Display", Georgia, serif; font-size: clamp(1.75rem, 2.65vw, 2.5rem); font-weight: 400; line-height: 0.81; letter-spacing: -0.06em; }
+.pamphlet-front-copy h2 i, .pamphlet-back-head h2 i { color: #e84d2a; font-weight: 400; }
+.pamphlet-front-copy p, .pamphlet-back-head p { max-width: 11rem; margin: 0.65rem 0 0; font-size: 0.56rem; font-weight: 700; line-height: 1.35; }
+.hawa-scene { position: absolute; z-index: 1; left: 0; right: 0; top: 35%; height: 42%; overflow: hidden; }
+.hawa-facade { position: absolute; left: 12%; right: 8%; bottom: 0; height: 77%; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; padding: 10px 9px 0; background: #e84d2a; border-top: 8px solid #193754; box-shadow: 6px 6px 0 rgba(25,55,84,0.14); }
+.hawa-facade::before { position: absolute; top: -20px; left: 16%; width: 68%; height: 13px; content: ""; border-radius: 100% 100% 0 0; background: #e84d2a; box-shadow: 0 -7px 0 #193754; }
+.hawa-facade span { display: block; position: relative; border-radius: 50% 50% 0 0; background: #f7e5ba; }
+.hawa-facade span::after { position: absolute; content: ""; width: 2px; height: 2px; left: 50%; top: 25%; border-radius: 50%; background: #193754; transform: translateX(-50%); }
+.hawa-base { position: absolute; left: 5%; right: 2%; bottom: -5px; z-index: -1; height: 23%; display: flex; align-items: end; gap: 9px; padding: 0 14px; background: #193754; transform: skewY(-3deg); }
+.hawa-base i { display: block; flex: 1; height: 56%; border-radius: 100% 100% 0 0; background: #f5ca88; }
+.tokyo-roof { position: absolute; z-index: 2; display: flex; align-items: end; gap: 4px; height: 47%; padding: 0 8px; border-bottom: 7px solid #193754; background: repeating-linear-gradient(90deg, #193754 0 7px, transparent 7px 12px); clip-path: polygon(50% 0, 100% 31%, 78% 31%, 100% 53%, 70% 53%, 100% 75%, 0 75%, 30% 53%, 0 53%, 22% 31%, 0 31%); }
+.tokyo-roof i { display: block; flex: 1; height: 45%; background: #193754; }
+.roof-one { right: -3%; top: 7%; width: 39%; }
+.roof-two { left: -8%; top: 32%; width: 33%; transform: scale(0.75); transform-origin: left top; }
+.front-offer-card { position: absolute; left: 25px; right: 25px; bottom: 58px; z-index: 5; display: grid; gap: 0.3rem; padding: 0.55rem 0.65rem; color: #193754; background: #f8edcc; border-left: 5px solid #193754; box-shadow: 4px 4px 0 rgba(25,55,84,0.2); }
+.front-offer-card span, .front-offer-card em { font-size: 0.43rem; font-style: normal; font-weight: 700; letter-spacing: 0.1em; }
+.front-offer-card strong { font-family: "DM Serif Display", Georgia, serif; font-size: 0.87rem; font-weight: 400; line-height: 0.9; }
+.front-offer-card em { color: #e84d2a; }
+.pamphlet-footer-line { position: absolute; z-index: 5; left: 25px; right: 25px; bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: #193754; font-size: 0.42rem; font-weight: 700; letter-spacing: 0.08em; }
+.pamphlet-footer-line img { width: 20px; height: 20px; object-fit: contain; }
+.pamphlet-back { background: linear-gradient(145deg, rgba(25,55,84,0.05), transparent 40%), #f8edcc; }
+.pamphlet-back::after { bottom: auto; top: 17%; border-top-color: #e84d2a; transform: rotate(2.5deg); }
+.pamphlet-back-head { top: 57px; }
+.pamphlet-back-head h2 { max-width: 12rem; font-size: clamp(1.55rem, 2.2vw, 2.15rem); line-height: 0.9; }
+.pamphlet-back-head p { max-width: 12rem; color: #4f6271; }
+.combo-stack { position: absolute; left: 25px; right: 25px; top: 35%; z-index: 5; display: grid; gap: 0.45rem; }
+.combo-card { position: relative; display: grid; gap: 0.22rem; min-height: 64px; padding: 0.46rem 2.7rem 0.46rem 0.6rem; border: 1px solid #193754; color: #193754; background: #f7cf8a; box-shadow: 3px 3px 0 rgba(25,55,84,0.15); }
+.combo-card span { font-size: 0.41rem; font-weight: 700; letter-spacing: 0.13em; }
+.combo-card strong { font-family: "DM Serif Display", Georgia, serif; font-size: 0.66rem; font-weight: 400; line-height: 1.03; }
+.combo-card em { position: absolute; right: 0.55rem; bottom: 0.55rem; color: #e84d2a; font-family: "DM Serif Display", Georgia, serif; font-size: 1rem; font-style: italic; }
+.combo-two { background: #d9e5d7; transform: translateX(7px); }
+.combo-three { background: #e84d2a; color: #fff6e0; transform: translateX(-5px); }
+.combo-three em { color: #f7cf8a; }
+.back-note { position: absolute; left: 25px; right: 25px; bottom: 54px; z-index: 5; padding-top: 0.55rem; border-top: 1px solid rgba(25,55,84,0.45); color: #536776; font-size: 0.39rem; font-weight: 700; letter-spacing: 0.07em; line-height: 1.35; }
+
 .crop-corner { position: absolute; width: 18px; height: 18px; border-color: #e84d2a; z-index: 2; }
 .crop-tl { top: -4px; left: -4px; border-top: 1px solid; border-left: 1px solid; }
 .crop-tr { top: -4px; right: -4px; border-top: 1px solid; border-right: 1px solid; }
