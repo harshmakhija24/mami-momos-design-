@@ -2,7 +2,8 @@
  * Rajasthan Atelier Archive, simplified: the home screen only curates projects.
  * A tile opens its own calm detail screen where proof sides and variants are reviewed.
  */
-import { ArrowLeft, ArrowUpRight, FileStack, LayoutTemplate, PanelTop } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, FileStack, LayoutTemplate, PanelTop } from "lucide-react";
+import "./leaflet-variants.css";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 
@@ -17,8 +18,9 @@ type Variant = {
   back: string;
   tone: Tone;
   marker: string;
-  artwork?: "hawa-pamphlet" | "imported-leaflet";
+  artwork?: "hawa-pamphlet" | "imported-leaflet" | "tank-talk" | "pink-city";
   format?: string;
+  download: string;
 };
 
 type DesignProject = {
@@ -32,14 +34,38 @@ type DesignProject = {
   variants: Variant[];
 };
 
+const useGitHubPagesAssets = import.meta.env.BASE_URL !== "/";
+const asset = (fileName: string, manusPath: string) =>
+  useGitHubPagesAssets ? `${import.meta.env.BASE_URL}assets/${fileName}` : manusPath;
+const download = (fileName: string, manusPath: string) =>
+  useGitHubPagesAssets ? `${import.meta.env.BASE_URL}downloads/${fileName}` : manusPath;
+
+const assets = {
+  mark: asset("mami-momos-archive-mark.png", "/manus-storage/mami-momos-archive-mark_720c60a2.png"),
+  menu1: asset("mami-menu-page-1.png", "/manus-storage/mami-menu-page-1_e82f82a2.png"),
+  menu2: asset("mami-menu-page-2.png", "/manus-storage/mami-menu-page-2_b673ed98.png"),
+  menu3: asset("mami-menu-page-3.png", "/manus-storage/mami-menu-page-3_fa75ef5c.png"),
+  menu4: asset("mami-menu-page-4.png", "/manus-storage/mami-menu-page-4_3231e81e.png"),
+  taxiFront: asset("taxi-driver-front.jpg", "/manus-storage/taxi-driver-front_7540f84a.jpg"),
+  taxiBack: asset("taxi-driver-back.jpg", "/manus-storage/taxi-driver-back_fac09305.jpg"),
+  leafletHero: asset("jaipur-kyoto-leaflet-hero.webp", "/manus-storage/jaipur-kyoto-leaflet-hero_e90ed94d.webp"),
+};
+
+const downloads = {
+  jaipurKyoto: download("variant-1-jaipur-kyoto.pdf", "/manus-storage/variant-1-jaipur-kyoto_0bf2c19a.pdf"),
+  hawaMahal: download("variant-2-hawa-mahal-walk.pdf", "/manus-storage/variant-2-hawa-mahal-walk_6866245b.pdf"),
+  tankTalk: download("variant-3-tank-talk.pdf", "/manus-storage/variant-3-tank-talk_ecac3850.pdf"),
+  pinkCity: download("variant-4-pink-city-express.pdf", "/manus-storage/variant-4-pink-city-express_6ffcb5ec.pdf"),
+};
+
 const projects: DesignProject[] = [
   {
     id: "mami-momos",
     index: "01",
     title: "Mami Momos",
-    category: "Hawa Mahal collateral",
-    description: "A simple working library for visitor-facing pamphlets and menu collateral.",
-    tileImage: "/manus-storage/mami-menu-page-1_e82f82a2.png",
+    category: "Hawa Mahal A5 leaflet proofs",
+    description: "Four A5 front/back leaflet directions for high-intent visitors around Hawa Mahal.",
+    tileImage: assets.menu1,
     tilePosition: "50% 15%",
     variants: [
       {
@@ -52,6 +78,7 @@ const projects: DesignProject[] = [
         marker: "#17262c",
         artwork: "imported-leaflet",
         format: "A5 portrait",
+        download: downloads.jaipurKyoto,
       },
       {
         id: "hawa-mahal-a5",
@@ -63,26 +90,31 @@ const projects: DesignProject[] = [
         marker: "#e84d2a",
         artwork: "hawa-pamphlet",
         format: "A5 portrait",
+        download: downloads.hawaMahal,
       },
       {
-        id: "cover-steam",
-        label: "Variant 3 — Menu cover",
-        note: "Cover page / first momo catalogue",
-        front: "/manus-storage/mami-menu-page-1_e82f82a2.png",
-        back: "/manus-storage/mami-menu-page-2_b673ed98.png",
-        tone: "teal",
-        marker: "#1e6c72",
-        format: "A4 portrait",
-      },
-      {
-        id: "small-plates",
-        label: "Variant 4 — Menu interiors",
-        note: "Momos, noodles, and starters edit",
-        front: "/manus-storage/mami-menu-page-3_fa75ef5c.png",
-        back: "/manus-storage/mami-menu-page-4_3231e81e.png",
-        tone: "paprika",
+        id: "tank-talk",
+        label: "Variant 3 — Tank Talk",
+        note: "Shark Tank India-led social-proof leaflet with simple basket choices",
+        front: "",
+        back: "",
+        tone: "amber",
         marker: "#e84d2a",
-        format: "A4 portrait",
+        artwork: "tank-talk",
+        format: "A5 portrait",
+        download: downloads.tankTalk,
+      },
+      {
+        id: "pink-city-express",
+        label: "Variant 4 — Pink City Express",
+        note: "Fast, high-contrast street-handout with an immediate three-item menu",
+        front: "",
+        back: "",
+        tone: "paprika",
+        marker: "#194a72",
+        artwork: "pink-city",
+        format: "A5 portrait",
+        download: downloads.pinkCity,
       },
     ],
   },
@@ -92,28 +124,30 @@ const projects: DesignProject[] = [
     title: "Taxi Driver",
     category: "Poster study",
     description: "A later poster exploration held here as a separate project.",
-    tileImage: "/manus-storage/taxi-driver-front_7540f84a.jpg",
+    tileImage: assets.taxiFront,
     tilePosition: "50% 50%",
     variants: [
       {
         id: "amber-proof",
         label: "Variant 1 — Amber proof",
         note: "Warm headlight and registration-bar edit",
-        front: "/manus-storage/taxi-driver-front_7540f84a.jpg",
-        back: "/manus-storage/taxi-driver-back_fac09305.jpg",
+        front: assets.taxiFront,
+        back: assets.taxiBack,
         tone: "amber",
         marker: "#d87c25",
         format: "A3 portrait",
+        download: "",
       },
       {
         id: "monsoon-proof",
         label: "Variant 2 — Monsoon proof",
         note: "Cooler ink separation and rain treatment",
-        front: "/manus-storage/taxi-driver-front_7540f84a.jpg",
-        back: "/manus-storage/taxi-driver-back_fac09305.jpg",
+        front: assets.taxiFront,
+        back: assets.taxiBack,
         tone: "monsoon",
         marker: "#315b85",
         format: "A3 portrait",
+        download: "",
       },
     ],
   },
@@ -122,7 +156,7 @@ const projects: DesignProject[] = [
 function Brand() {
   return (
     <Link className="brand" href="/" aria-label="Return to the project library">
-      <img src="/manus-storage/mami-momos-archive-mark_720c60a2.png" alt="" />
+      <img src={assets.mark} alt="" />
       <span><b>MAMI MOMOS</b><em>Design Library</em></span>
     </Link>
   );
@@ -148,7 +182,7 @@ function HawaMahalPamphlet({ side }: { side: Side }) {
             <div className="hawa-base"><i /><i /><i /><i /><i /></div>
           </div>
           <div className="front-offer-card"><span>HAWA MAHAL WALKER OFFER</span><strong>6 PC MOMO + MASALA CHAI</strong><em>₹ — FINAL PRICE TO BE ADDED</em></div>
-          <div className="pamphlet-footer"><span>ADDRESS / QR / CONTACT — EDIT BEFORE PRINTING</span><img src="/manus-storage/mami-momos-archive-mark_720c60a2.png" alt="" /></div>
+          <div className="pamphlet-footer"><span>ADDRESS / QR / CONTACT — EDIT BEFORE PRINTING</span><img src={assets.mark} alt="" /></div>
         </>
       ) : (
         <>
@@ -159,7 +193,7 @@ function HawaMahalPamphlet({ side }: { side: Side }) {
             <article className="combo-card combo-three"><span>03 / EVENING EDIT</span><strong>Veg Schezwan Momo · 6 pcs<br />Chilli Garlic Noodles Veg</strong><em>₹ —</em></article>
           </div>
           <div className="back-note">ALL PRICES, QR, ADDRESS &amp; OFFER TERMS ARE EDITABLE PLACEHOLDERS.</div>
-          <div className="pamphlet-footer"><span>FRONT / BACK DESIGNED AS ONE SET</span><img src="/manus-storage/mami-momos-archive-mark_720c60a2.png" alt="" /></div>
+          <div className="pamphlet-footer"><span>FRONT / BACK DESIGNED AS ONE SET</span><img src={assets.mark} alt="" /></div>
         </>
       )}
     </div>
@@ -170,7 +204,7 @@ function ImportedLeaflet({ side }: { side: Side }) {
   if (side === "front") {
     return (
       <div className="imported-leaflet imported-front">
-        <div className="imported-front-art" aria-hidden="true"><i className="imported-jharokha" /><i className="imported-shoji" /></div>
+        <div className="imported-front-art" style={{ backgroundImage: `linear-gradient(160deg,rgba(91,25,34,.37),rgba(13,35,39,.14) 48%,rgba(7,20,24,.76)),url(${assets.leafletHero})` }} aria-hidden="true"><i className="imported-jharokha" /><i className="imported-shoji" /></div>
         <div className="imported-sheet">
           <div className="imported-topline"><div className="imported-brand"><b>◒</b><span><strong>MAMI</strong><small>MOMOS</small></span></div><em>JAIPUR × KYOTO</em></div>
           <div className="imported-front-copy"><p>✦&nbsp; A SMALLER, WARMER WORLD</p><h2>Fold the<br /><i>ordinary.</i></h2><span>Hand-rolled momos with Jaipur fire and a quiet Kyoto finish.</span></div>
@@ -199,6 +233,22 @@ function ImportedLeaflet({ side }: { side: Side }) {
   );
 }
 
+function TankTalkLeaflet({ side }: { side: Side }) {
+  if (side === "front") {
+    return <div className="print-leaflet tank-talk-front"><div className="tank-side" /><div className="tank-foot"><span>ONE BITE. BIG TALK.</span><strong>Steam it. Spice it. Share it.</strong><small>ADDRESS / QR / CONTACT — EDIT BEFORE PRINTING</small></div><div className="tank-copy"><em>FEATURED ON SHARK TANK INDIA</em><h2>THE MOMO<br />THAT MADE<br /><i>THE TANK</i><br />TALK.</h2><p>Hand-folded comfort food for the Hawa Mahal walk.</p></div></div>;
+  }
+
+  return <div className="print-leaflet tank-talk-back"><header><span>MAMI MOMOS / FEATURED ON SHARK TANK INDIA</span><small>A5 / BACK</small></header><div className="tank-back-copy"><em>PICK YOUR BASKET</em><h2>MAKE IT<br /><i>A TABLE.</i></h2><p>Clear choices for the first stop, the couple stop, or the full table.</p></div><div className="tank-baskets"><div><b>01 / SOLO FOLD</b><strong>6 MOMOS</strong><span>2 DIPS · ICED CHAI · PRICE TBD</span></div><div><b>02 / PAIR UP</b><strong>12 MOMOS</strong><span>2 DRINKS · 2 DIPS · PRICE TBD</span></div><div><b>03 / BIG TABLE</b><strong>20 MOMOS</strong><span>4 DRINKS · 3 DIPS · PRICE TBD</span></div></div><footer>PICK A FILLING — VEG STEAM · PANEER STEAM · VEG SCHEZWAN</footer></div>;
+}
+
+function PinkCityLeaflet({ side }: { side: Side }) {
+  if (side === "front") {
+    return <div className="print-leaflet pink-city-front"><aside><span>MAMI MOMOS</span><small>PINK CITY EXPRESS / FRONT</small></aside><div className="pink-top">FEATURED ON SHARK TANK INDIA</div><div className="pink-copy"><h2>TAKE THE<br /><i>LONG WAY.</i><br />TAKE THE<br /><b>MOMO.</b></h2><p>Street-ready warmth for the Jaipur walk.</p><small>QR / ADDRESS / CONTACT — EDIT BEFORE PRINTING</small></div></div>;
+  }
+
+  return <div className="print-leaflet pink-city-back"><header>MAMI MOMOS / PINK CITY EXPRESS / A5 BACK</header><div className="pink-back-copy"><em>THE QUICK PICK MENU</em><h2>KEEP IT<br /><i>SIMPLE.</i></h2></div><div className="pink-menu"><div><b>STEAM</b><strong>VEG STEAM MOMO</strong><span>PRICE TBD</span></div><div><b>SPICE</b><strong>VEG SCHEZWAN MOMO</strong><span>PRICE TBD</span></div><div><b>SIP</b><strong>KADAK MASALA CHAI</strong><span>PRICE TBD</span></div></div><footer>ASK ABOUT VEG / VEGAN OPTIONS · FINAL PRICE &amp; ALLERGEN NOTES TO BE INSERTED</footer></div>;
+}
+
 export default function Home() {
   return (
     <main className="library-page">
@@ -222,12 +272,18 @@ export default function Home() {
   );
 }
 
+function preferredVariant(project: DesignProject) {
+  if (typeof window === "undefined") return project.variants[0].id;
+  const requested = new URLSearchParams(window.location.search).get("variant");
+  return project.variants.some((item) => item.id === requested) ? requested! : project.variants[0].id;
+}
+
 export function ProjectDetail({ projectId }: { projectId: string }) {
   const project = projects.find((item) => item.id === projectId) ?? projects[0];
   const [side, setSide] = useState<Side>("front");
-  const [variantId, setVariantId] = useState(project.variants[0].id);
+  const [variantId, setVariantId] = useState(() => preferredVariant(project));
 
-  useEffect(() => { setSide("front"); setVariantId(project.variants[0].id); }, [project.id]);
+  useEffect(() => { setSide("front"); setVariantId(preferredVariant(project)); }, [project.id]);
 
   const variant = useMemo(
     () => project.variants.find((item) => item.id === variantId) ?? project.variants[0],
@@ -242,7 +298,7 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
       <section className="detail-layout">
         <section className="proof-area" aria-label="Design preview">
           <div className={`proof-paper tone-${variant.tone}`}>
-            {variant.artwork === "hawa-pamphlet" ? <HawaMahalPamphlet side={side} /> : variant.artwork === "imported-leaflet" ? <ImportedLeaflet side={side} /> : <img src={preview} alt={`${project.title} ${variant.label} ${side}`} />}
+            {variant.artwork === "hawa-pamphlet" ? <HawaMahalPamphlet side={side} /> : variant.artwork === "imported-leaflet" ? <ImportedLeaflet side={side} /> : variant.artwork === "tank-talk" ? <TankTalkLeaflet side={side} /> : variant.artwork === "pink-city" ? <PinkCityLeaflet side={side} /> : <img src={preview} alt={`${project.title} ${variant.label} ${side}`} />}
             <div className="proof-label">{side.toUpperCase()} / PROOF</div>
           </div>
           <p className="proof-note">{variant.note}</p>
@@ -251,6 +307,7 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
           <label className="control-block"><span>VARIANT</span><select className="variant-select" value={variant.id} onChange={(event) => setVariantId(event.target.value)}>{project.variants.map((item) => <option value={item.id} key={item.id}>{item.label}</option>)}</select></label>
           <div className="control-block"><p>VIEW SIDE</p><div className="side-tabs">{(["front", "back"] as Side[]).map((item) => <button key={item} type="button" className={side === item ? "active" : ""} onClick={() => setSide(item)} aria-pressed={side === item}><PanelTop size={15} />{item}</button>)}</div></div>
           <div className="project-facts"><div><LayoutTemplate size={18} /><span><b>FORMAT</b>{variant.format}</span></div><div><FileStack size={18} /><span><b>STATUS</b>Review proof</span></div></div>
+          {variant.download ? <a className="download-proof" href={variant.download} download><Download size={16} /> DOWNLOAD PRINT-READY A5 PDF</a> : null}
           <p className="placeholder-note">Final price, contact details, QR, and offer terms are still placeholders until you approve the design.</p>
         </aside>
       </section>
