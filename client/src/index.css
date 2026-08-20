@@ -91,7 +91,7 @@
   .leaflet-mark { display: grid; place-items: center; width: 1.95rem; height: 1.95rem; border: 1px solid currentColor; border-radius: 50%; }
 
   .leaflet-front { isolation: isolate; color: #fff8ec; background: #233136; }
-  .front-visual { position: absolute; inset: 0; z-index: -1; background-image: url('/assets/jaipur-kyoto-hero.webp'); background-size: cover; background-position: 50% 50%; }
+  .front-visual { position: absolute; inset: 0; z-index: -1; background-image: url('./assets/jaipur-kyoto-hero.webp'); background-size: cover; background-position: 50% 50%; }
   .front-visual__wash { position: absolute; inset: 0; background: linear-gradient(160deg, rgb(91 25 34 / 37%) 0%, rgb(13 35 39 / 14%) 48%, rgb(11 25 30 / 76%) 100%); }
   .front-visual__jharokha { position: absolute; left: 0; top: 0; bottom: 0; width: 23%; opacity: .18; background-image: radial-gradient(ellipse at 50% 75%, transparent 36%, #ffe4c3 37%, #ffe4c3 42%, transparent 43%); background-size: 34px 39px; }
   .front-visual__shoji { position: absolute; right: 0; top: 0; bottom: 0; width: 26%; opacity: .16; background-image: repeating-linear-gradient(90deg, transparent 0 15px, rgb(255 240 205 / 94%) 16px 17px, transparent 18px 31px); }
