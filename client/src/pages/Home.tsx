@@ -2,7 +2,6 @@
  * Rajasthan Atelier Archive, simplified: the home screen only curates projects.
  * A tile opens its own calm detail screen where proof sides and variants are reviewed.
  */
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, ArrowUpRight, FileStack, LayoutTemplate, PanelTop } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
@@ -249,7 +248,7 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
           <p className="proof-note">{variant.note}</p>
         </section>
         <aside className="detail-controls">
-          <div className="control-block"><p>VARIANT</p><Select value={variant.id} onValueChange={setVariantId}><SelectTrigger className="variant-select"><SelectValue /></SelectTrigger><SelectContent>{project.variants.map((item) => <SelectItem value={item.id} key={item.id}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+          <label className="control-block"><span>VARIANT</span><select className="variant-select" value={variant.id} onChange={(event) => setVariantId(event.target.value)}>{project.variants.map((item) => <option value={item.id} key={item.id}>{item.label}</option>)}</select></label>
           <div className="control-block"><p>VIEW SIDE</p><div className="side-tabs">{(["front", "back"] as Side[]).map((item) => <button key={item} type="button" className={side === item ? "active" : ""} onClick={() => setSide(item)} aria-pressed={side === item}><PanelTop size={15} />{item}</button>)}</div></div>
           <div className="project-facts"><div><LayoutTemplate size={18} /><span><b>FORMAT</b>{variant.format}</span></div><div><FileStack size={18} /><span><b>STATUS</b>Review proof</span></div></div>
           <p className="placeholder-note">Final price, contact details, QR, and offer terms are still placeholders until you approve the design.</p>

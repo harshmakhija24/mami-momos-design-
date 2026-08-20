@@ -55,8 +55,8 @@ button:focus-visible, a:focus-visible, [role="combobox"]:focus-visible { outline
 .proof-note { margin: 0; color: #63777d; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; }
 .detail-controls { display: grid; gap: 1.55rem; padding: 1.2rem 0; }
 .control-block { display: grid; gap: 0.55rem; }
-.control-block > p { margin-bottom: 0; }
-.variant-select { min-height: 45px; border-radius: 0; border-color: rgba(24,53,75,0.28); background: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 700; }
+.control-block > p, .control-block > span { margin: 0; color: #e84d2a; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; }
+.variant-select { width: 100%; min-height: 45px; padding: 0 0.7rem; border: 1px solid rgba(24,53,75,0.28); border-radius: 0; color: #18354b; background: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 700; }
 .side-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 .side-tabs button { display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.75rem 0.4rem; border: 1px solid rgba(24,53,75,0.28); color: #48626e; background: transparent; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: 160ms ease; }
 .side-tabs button.active { border-color: #e84d2a; color: #fff8eb; background: #e84d2a; }.side-tabs button:active { transform: scale(.97); }
